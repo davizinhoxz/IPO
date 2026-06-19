@@ -205,7 +205,7 @@ function VeiculosList() {
         setMensagemErro(data.message);
       }
     } catch {
-      setMensagemErro('Erro ao eliminar veículo');
+      setMensagemErro('Erro ao eliminar este veículo');
     }
     finally {
       closeDeleteModal();
@@ -235,7 +235,7 @@ function VeiculosList() {
           <h2>Veículos</h2>
         </div>
         <div className="col-6 text-right">
-          <button className="btn btn-dark ml-3" ><i className="fa fa-plus-square" aria-hidden="true"></i> Novo Veículo</button>
+          <button className="btn btn-dark ml-3" ><i className="fa fa-plus-square" aria-hidden="true"></i> Novo Veiculo</button>
           <button className="btn btn-light ml-3" onClick={fetchData}><i className="fa fa-refresh" aria-hidden="true"></i> Atualizar</button>
         </div>
       </div>
@@ -253,7 +253,7 @@ function VeiculosList() {
             <th>Código</th>
             <th>Matrícula</th>
             <th>Data Livrete</th>
-            <th>Ano Fábrico</th>
+            <th>Ano Fabrico</th>
             <th>Nome Cliente</th>
             <th>Marca</th>
           </tr>
@@ -262,11 +262,11 @@ function VeiculosList() {
           {veiculos.map(veiculos => (
             <tr key={veiculos.codvei}>
               <td>{veiculos.codvei}</td>
-              <td>{veiculos.codmatricula}</td>
-              <td>{veiculos.datalivrete}</td>
+              <td>{veiculos.codMatricula}</td>
+              <td>{veiculos.dataLivrete}</td>
               <td>{veiculos.anofabrico}</td>
-              <td>{veiculos.cliente.nome}</td>
-              <td>{veiculos.marca.m}</td>
+              <td>{veiculos.clienteName}</td>
+              <td>{veiculos.marca}</td>
               <td style={{ whiteSpace: 'nowrap' }}>
                 <button className="btn btn-dark btn-sm mr-2" ><i className='fa fa-eye' aria-hidden='true'></i></button>
                 <button className="btn btn-dark btn-sm mr-2" ><i className='fa fa-pencil' aria-hidden='true'></i></button>
@@ -292,7 +292,7 @@ function VeiculosList() {
                   </button>
                 </div>
                 <div className="modal-body">
-                  <p>Tem certeza que vai eliminar este veículo?</p>
+                  <p>Tem certeza que vai eliminar este veiculo?</p>
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-secondary" onClick={closeDeleteModal}>Cancelar</button>

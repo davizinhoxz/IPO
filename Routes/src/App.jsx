@@ -29,7 +29,6 @@ function App() {
     </div>
   );
 }
-// Estas páginas serão criadas nas próximas etapas
 function Inicio() {
   return <div className="jumbotron">
     <div className="text-center">
@@ -266,7 +265,6 @@ function VeiculosList() {
               <td>{veiculos.dataLivrete}</td>
               <td>{veiculos.anofabrico}</td>
               <td>{veiculos.clienteName}</td>
-              <td>{veiculos.marca}</td>
               <td style={{ whiteSpace: 'nowrap' }}>
                 <button className="btn btn-dark btn-sm mr-2" ><i className='fa fa-eye' aria-hidden='true'></i></button>
                 <button className="btn btn-dark btn-sm mr-2" ><i className='fa fa-pencil' aria-hidden='true'></i></button>

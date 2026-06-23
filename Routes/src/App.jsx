@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { useNavigate, Routes, Route, Link } from 'react-router-dom';
 
 
-const API_BASE = 'https://effective-capybara-v665669654wghp5gj-3000.app.github.dev'
+const API_BASE = 'https://turbo-zebra-wrr4rrpr4wjrhg749-3000.app.github.dev'
 
 function App() {
   return (
@@ -259,16 +259,17 @@ function VeiculosList() {
         </thead>
         <tbody>
           {veiculos.map(veiculos => (
-            <tr key={veiculos.codvei}>
-              <td>{veiculos.codvei}</td>
-              <td>{veiculos.codMatricula}</td>
-              <td>{veiculos.dataLivrete}</td>
+            <tr key={veiculos.codveiculo}>
+              <td>{veiculos.codveiculo}</td>
+              <td>{veiculos.codmatricula}</td>
+              <td>{veiculos.datalivrete}</td>
               <td>{veiculos.anofabrico}</td>
-              <td>{veiculos.clienteName}</td>
+              <td>{veiculos.cliente.nome}</td>
+              <td>{veiculos.marca.marca}</td>
               <td style={{ whiteSpace: 'nowrap' }}>
                 <button className="btn btn-dark btn-sm mr-2" ><i className='fa fa-eye' aria-hidden='true'></i></button>
                 <button className="btn btn-dark btn-sm mr-2" ><i className='fa fa-pencil' aria-hidden='true'></i></button>
-                <button className="btn btn-dark btn-sm" onClick={() => openDeleteModal(veiculos.codvei)}>
+                <button className="btn btn-dark btn-sm" onClick={() => openDeleteModal(veiculos.codveiculo)}>
                   <i className='fa fa-trash' aria-hidden='true'></i>
                 </button>
               </td>

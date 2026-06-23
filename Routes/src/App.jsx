@@ -1,5 +1,7 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Routes, Route, Link } from 'react-router-dom';
+import { useNavigate, Routes, Route} from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
 
 
 const API_BASE = 'https://turbo-zebra-wrr4rrpr4wjrhg749-3000.app.github.dev'
@@ -21,7 +23,13 @@ function App() {
       <div className="container mt-4">
         <Routes>
           <Route path="/" element={<Inicio />} />
-          <Route path="/clientes" element={<ClientesList />} />
+          <Route path="/clientes" element={<ClientesList />} />~
+
+          {/* Rotas do formulário de Clientes */}
+          <Route path="/clientes/create" element={<ClienteForm modo="create" />} />
+          <Route path="/clientes/update/:id" element={<ClienteForm modo="update" />} />
+          <Route path="/clientes/read/:id" element={<ClienteForm modo="read" />} />
+          
           <Route path="/veiculos" element={<VeiculosList />} />
           <Route path="/inspecoes" element={<InspecoesList />} />
         </Routes>
@@ -102,7 +110,11 @@ function ClientesList() {
           <h2>Clientes</h2>
         </div>
         <div className="col-6 text-right">
-          <button className="btn btn-dark ml-3" ><i className="fa fa-plus-square" aria-hidden="true"></i> Novo Cliente</button>
+
+          <Link to="/clientes/create" className="btn btn-dark">
+            <i className="fa fa-plus-square" aria-hidden="true"></i> Novo Cliente
+          </Link>
+
           <button className="btn btn-light ml-3" onClick={fetchData}><i className="fa fa-refresh" aria-hidden="true"></i> Atualizar</button>
         </div>
       </div>
@@ -171,6 +183,44 @@ function ClientesList() {
     </>
   );
 }
+
+
+function ClienteForm() {
+const [formData, setFormData] = useState({ nome: '', morada: '', nif: '' });
+const [mensagemErro, setMensagemErro] = useState(null);
+
+const navigate = useNavigate();
+
+
+  return (
+    <div className="container">
+      <h2>Formulário de Clientes</h2>
+      <form>
+
+        <div className="form-group">
+          <label htmlFor="nome">Nome:</label>
+          <input type="text" className="form-control" id="nome" name="nome" />
+        </div>
+        
+        <div className="form-group">
+          <label htmlFor="morada">Morada:</label>
+          <input type="text" className="form-control" id="morada" name="morada" />
+        </div>
+
+        <div className="form-group">
+          <label htmlFor="nif">NIF:</label>
+          <input type="text" className="form-control" id="nif" name="nif" />
+        </div>
+        
+        <button type="submit" className="btn btn-dark mr-2">Guardar</button>
+        <button type="submit" className="btn btn-secondary">Cancelar</button>
+
+      </form>
+    </div>
+  );
+}
+
+
 function VeiculosList() {
 
   const [veiculos, setVeiculos] = useState([]);
@@ -309,5 +359,7 @@ function VeiculosList() {
 function InspecoesList() {
   return (<h2>Página de Inspeções</h2>);
 }
+
+
 
 export default App

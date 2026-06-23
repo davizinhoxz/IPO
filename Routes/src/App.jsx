@@ -199,17 +199,17 @@ const navigate = useNavigate();
 
         <div className="form-group">
           <label htmlFor="nome">Nome:</label>
-          <input type="text" className="form-control" id="nome" name="nome" />
+          <input type="text" className="form-control" id="nome" name="nome" value={formData.nome} onChange={(e) => setFormData({ ...formData, nome: e.target.value })}/>
         </div>
-        
+
         <div className="form-group">
           <label htmlFor="morada">Morada:</label>
-          <input type="text" className="form-control" id="morada" name="morada" />
+          <input type="text" className="form-control" id="morada" name="morada" value={formData.morada} onChange={(e) => setFormData({ ...formData, morada: e.target.value })}/>
         </div>
 
         <div className="form-group">
           <label htmlFor="nif">NIF:</label>
-          <input type="text" className="form-control" id="nif" name="nif" />
+          <input type="text" className="form-control" id="nif" name="nif" value={formData.nif} onChange={(e) => setFormData({ ...formData, nif: e.target.value })}/>
         </div>
         
         <button type="submit" className="btn btn-dark mr-2">Guardar</button>

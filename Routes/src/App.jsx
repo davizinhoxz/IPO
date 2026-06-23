@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { useNavigate, Routes, Route} from 'react-router-dom';
+import { useNavigate, Routes, Route } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 
 
@@ -29,7 +29,7 @@ function App() {
           <Route path="/clientes/create" element={<ClienteForm modo="create" />} />
           <Route path="/clientes/update/:id" element={<ClienteForm modo="update" />} />
           <Route path="/clientes/read/:id" element={<ClienteForm modo="read" />} />
-          
+
           <Route path="/veiculos" element={<VeiculosList />} />
           <Route path="/inspecoes" element={<InspecoesList />} />
         </Routes>
@@ -186,34 +186,54 @@ function ClientesList() {
 
 
 function ClienteForm() {
-const [formData, setFormData] = useState({ nome: '', morada: '', nif: '' });
-const [mensagemErro, setMensagemErro] = useState(null);
+  const [formData, setFormData] = useState({ nome: '', morada: '', nif: '' });
+  const [mensagemErro, setMensagemErro] = useState(null);
 
-const navigate = useNavigate();
+  const navigate = useNavigate();
 
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const method = 'POST';
+      const url = `${API_BASE}/clientes`;
+      const response = await fetch(url, {
+        method,
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
+      const data = await response.json();
+      if (data.success) {
+        navigate('/clientes');
+      } else {
+        setMensagemErro(data.message);
+      }
+    } catch {
+      setMensagemErro('Erro ao guardar o cliente');
+    }
+  };
 
   return (
     <div className="container">
       <h2>Formulário de Clientes</h2>
-      <form>
+      <form onSubmit={handleSubmit}>
 
         <div className="form-group">
           <label htmlFor="nome">Nome:</label>
-          <input type="text" className="form-control" id="nome" name="nome" value={formData.nome} onChange={(e) => setFormData({ ...formData, nome: e.target.value })}/>
+          <input type="text" className="form-control" id="nome" name="nome" value={formData.nome} onChange={(e) => setFormData({ ...formData, nome: e.target.value })} />
         </div>
 
         <div className="form-group">
           <label htmlFor="morada">Morada:</label>
-          <input type="text" className="form-control" id="morada" name="morada" value={formData.morada} onChange={(e) => setFormData({ ...formData, morada: e.target.value })}/>
+          <input type="text" className="form-control" id="morada" name="morada" value={formData.morada} onChange={(e) => setFormData({ ...formData, morada: e.target.value })} />
         </div>
 
         <div className="form-group">
           <label htmlFor="nif">NIF:</label>
-          <input type="text" className="form-control" id="nif" name="nif" value={formData.nif} onChange={(e) => setFormData({ ...formData, nif: e.target.value })}/>
+          <input type="text" className="form-control" id="nif" name="nif" value={formData.nif} onChange={(e) => setFormData({ ...formData, nif: e.target.value })} />
         </div>
-        
+
         <button type="submit" className="btn btn-dark mr-2">Guardar</button>
-        <button type="submit" className="btn btn-secondary">Cancelar</button>
+        <button type="button" className="btn btn-secondary" onClick={() => navigate('/clientes')}>Cancelar</button>
 
       </form>
     </div>

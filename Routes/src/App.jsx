@@ -4,12 +4,11 @@ import { Link } from 'react-router-dom';
 
 
 
-const API_BASE = 'https://turbo-zebra-wrr4rrpr4wjrhg749-3000.app.github.dev'
+const API_BASE = 'https://reimagined-tribble-4jjrjj5jrxw7357j6-3000.app.github.dev'
 
 function App() {
   return (
     <div>
-      {/* Barra de navegação superior em bootstap 4 */}
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
         <div className="container">
           <Link className="navbar-brand" to="/">IPO</Link>
@@ -378,6 +377,9 @@ function VeiculosList() {
 
 function InspecoesList() {
   return (<h2>Página de Inspeções</h2>);
+
+  
+
 }
 
 

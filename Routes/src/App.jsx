@@ -376,10 +376,138 @@ function VeiculosList() {
 }
 
 function InspecoesList() {
-  return (<h2>Página de Inspeções</h2>);
+  const [deleteId, setDeleteId] = useState(null);
+  const [showDeleteModal, setShowDeleteModal] = useState(false);
+  const [inspecoes, setInspecoes] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [mensagemErro, setMensagemErro] = useState(null);
+  const navigate = useNavigate();
 
-  
+  useEffect(() => {
+    fetchData();
+  }, []);
 
+  const openDeleteModal = (id) => {
+    setDeleteId(id);
+    setShowDeleteModal(true);
+  };
+
+  const closeDeleteModal = () => {
+    setDeleteId(null);
+    setShowDeleteModal(false);
+  };
+
+  const confirmDelete = async (id) => {
+    try {
+      const response = await fetch(API_BASE + '/inspecoes/' + id, { method: 'DELETE' });
+      const data = await response.json();
+      if (data.success) {
+        fetchData();
+      } else {
+        setMensagemErro(data.message);
+      }
+    } catch {
+      setMensagemErro('Erro ao eliminar inspeção');
+    }
+    finally {
+      closeDeleteModal();
+    }
+  };
+
+  const fetchData = async () => {
+    try {
+      const response = await fetch(API_BASE + '/inspecoes');
+      const data = await response.json();
+      if (data.success) {
+        setInspecoes(data.data);
+      } else {
+        setMensagemErro(data.message);
+      }
+    } catch {
+      setMensagemErro('Erro ao carregar inspeções');
+    } finally {
+      setLoading(false);
+    }
+  };
+  if (loading) return <p>Carregando...</p>;
+  return (
+    <>
+      <div className="row">
+        <div className="col-6">
+          <h2>Página de Inspeções</h2>
+        </div>
+        <div className="col-6 text-right">
+          <button className="btn btn-dark ml-3" ><i className="fa fa-plus-square" aria-hidden="true"></i> Nova Inspeção</button>
+          <button className="btn btn-light ml-3" onClick={fetchData}><i className="fa fa-refresh" aria-hidden="true"></i> Atualizar</button>
+        </div>
+      </div>
+      {mensagemErro && (
+        <div className="alert alert-danger alert-dismissible fade show" role="alert">
+          {mensagemErro}
+          <button type="button" className="close" onClick={() => setMensagemErro('')} aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+      )}
+      <table className="table table-striped">
+        <thead>
+          <tr>
+            <th>Codigo Inspeção</th>
+            <th>Código Cliente</th>
+            <th>Código Matrícula</th>
+            <th>Código Inspetor</th>
+            <th>Data Inspeção</th>
+            <th>Número Faltas</th>
+            <th>Descrição Faltas</th>
+            <th>Aprovado</th>
+            <th>Opções</th>
+          </tr>
+        </thead>
+        <tbody>
+          {inspecoes.map(inspecao => (
+            <tr key={inspecao.codinspecao}>
+              <td>{inspecao.codinspecao}</td>
+              <td>{inspecao.codcli}</td>
+              <td>{inspecao.codmatricula}</td>
+              <td>{inspecao.codinspetor}</td>
+              <td>{inspecao.datainspecao}</td>
+              <td>{inspecao.numerofaltas}</td>
+              <td>{inspecao.descricaofaltas}</td>
+              <td>{inspecao.aprovado}</td>
+              <td style={{ whiteSpace: 'nowrap' }}>
+                <button className="btn btn-dark btn-sm mr-2" ><i className='fa fa-eye' aria-hidden='true'></i></button>
+                <button className="btn btn-dark btn-sm mr-2" ><i className='fa fa-pencil' aria-hidden='true'></i></button>
+              </td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      {showDeleteModal && (
+        <>
+          <div className="modal-backdrop fade show"></div>
+          <div className="modal fade show" style={{ display: 'block' }} tabIndex="-1" role="dialog">
+            <div className="modal-dialog" role="document">
+              <div className="modal-content">
+                <div className="modal-header">
+                  <h5 className="modal-title">Confirmação</h5>
+                  <button type="button" className="close" onClick={closeDeleteModal}>
+                    <span>&times;</span>
+                  </button>
+                </div>
+                <div className="modal-body">
+                  <p>Tem certeza que deseja eliminar este veículo?</p>
+                </div>
+                <div className="modal-footer">
+                  <button type="button" className="btn btn-secondary" onClick={closeDeleteModal}>Cancelar</button>
+                  <button type="button" className="btn btn-danger" onClick={() => confirmDelete(deleteId)}>Confirmar</button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </>
+      )}
+    </>
+  );
 }
 
 

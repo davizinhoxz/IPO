@@ -3,7 +3,7 @@ import { useNavigate, Routes, Route, Link, useParams } from 'react-router-dom';
 
 
 
-const API_BASE = 'https://reimagined-tribble-4jjrjj5jrxw7357j6-3000.app.github.dev'
+const API_BASE = 'https://obscure-doodle-97vxxqq5px3w47-3000.app.github.dev'
 
 function App() {
   return (
@@ -226,11 +226,7 @@ function ClienteForm({ modo }) {
       });
       const data = await response.json();
       if (data.success) {
-        if (modo === 'create' && data.data?.codcli) {
-          navigate('/clientes/update/' + data.data.codcli);
-        } else {
-          navigate('/clientes');
-        }
+        navigate('/clientes');
       } else {
         setMensagemErro(data.message);
       }
